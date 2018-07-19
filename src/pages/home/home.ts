@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {API} from '../../app/api'
+import { WeatherProvider } from '../../providers/weather/weather';
 
 @Component({
   selector: 'page-home',
@@ -8,14 +8,19 @@ import {API} from '../../app/api'
 })
 export class HomePage {
 
-  private n = new API();
-  key: string;
 
+  constructor(
+    public navCtrl: NavController,
+    private weatherProvider: WeatherProvider) {
+  }
 
+  ionViewDidLoad() {
+    this.weatherProvider.getWeather();
+    this.weatherProvider.weather.subscribe((data: any) => {
+      console.log(data);
+    });
 
-  constructor(public navCtrl: NavController) {
-    this.key = this.n.getKey();
-    console.log(this.key);
+    //console.log();
   }
 
 }
